@@ -1,3 +1,5 @@
+import { stringify } from "querystring";
+
 describe('basic data types', () => {
   it('is easy to declare a variable', () =>{
     let a = 10, b = 20;
@@ -118,6 +120,87 @@ describe('basic data types', () => {
       };
 
       expect(movie2.director).toBe('Spielberg');
-    })
-  })
+    });
+  });
+  describe('array literals', () => {
+    it('syntax 1', () => {
+      const frients = ['Sean', 'Billy', 'Amy'];
+      let luckyNumbers: (number | string)[];
+      luckyNumbers = [1, 9, 20, 108, 'string'];
+
+      let e =  luckyNumbers[1];
+
+      luckyNumbers[1] = 'birds';
+    });
+    it('generic syntax', () => {
+      // compiles to same javascript code
+      let friends:Array<string>;
+      let friends2: string[];
+    });
+    it('typed arrays - tuples', () => {
+      let userInfo:[string, string, number, string[]];
+      //userInfo = [13]; won't like this
+      userInfo = ['waren', 'elis', 59, ['musician', 'artist', 'writer']];
+
+    });
+  });
+  describe('object literals', () => {
+    it('object literals are anonymous objects', () => {
+      interface Artist {
+        firstName: string;
+        lastname: string;
+        age: number;
+        jobs: string[];
+        books?: string[];
+      }
+
+      const Warren:Artist = {
+        firstName: 'Waren',
+        lastname: 'Peace',
+        age: 16,
+        jobs:[
+          'student',
+          'hero',
+          'villian'
+        ]
+      }
+      expect(Warren.firstName).toBe('Waren');
+      expect(Warren['firstName']).toBe('Waren');
+
+      Warren.books = ['really good book'];
+    });
+  });
+  describe('functional typing', () =>{
+    it('structural typing', ()=> {
+      function doSomething(thing:{message: string, from: string}){
+        console.log(`At ${new Date()}, ${thing.message}, ${thing.from}`);
+      }
+
+      const call = {from: 'bill', message: 'message', needsCallback:false}
+      doSomething(call);
+    });
+  });
+  describe('function literals', ()=>{
+    it('named functions', () => {
+      expect(add(2, 2)).toBe(4);
+
+      function add(a: number, b: number): number{
+        return a+b;
+      }
+    });
+    it('anonymous functions', () =>{
+      const subtract = (a:number, b:number): number => a - b;
+      expect(subtract(8,2)).toBe(6);
+      const divide = (a:number, b:number) => {
+        if(b == 0){
+          throw 'are you crazy';
+        }
+        else{
+          return a / b;
+        }
+      }
+      expect(divide(8, 2)).toBe(4);
+      expect(() => divide(10, 0)).toBe('are you crazy');
+    });
+  });
 });
