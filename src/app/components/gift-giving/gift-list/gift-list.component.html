@@ -1,0 +1,18 @@
+<ul class="list-unstyled">
+  <li class="card"
+      *ngFor="let gift of giftList">
+    <div class="card-header">{{ gift.description }}</div>
+    <div class="card-body">For {{ gift.for }}</div>
+    <div class="card-footer"
+    [ngClass]="{ 'alert-success': gift.purchased}">
+      <div *ngIf="gift.purchased === false">
+        Due By: {{ gift.due | date:'mediumDate'}}
+        <button class="btn btn-sm btn-primary"
+        (click)="markPurchased(gift)">I've Purchased This!</button>
+      </div>
+    <div *ngIf="gift.purchased === true">
+      You purchased this.
+    </div>
+  </div>
+  </li>
+</ul>
